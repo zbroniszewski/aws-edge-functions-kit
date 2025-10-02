@@ -1,0 +1,134 @@
+{
+  "Records": [
+    {
+      "cf": {
+        "config": {
+          "distributionDomainName": "example.cloudfront.net",
+          "distributionId": "example",
+          "eventType": "origin-request",
+          "requestId": "example"
+        },
+        "request": {
+          "clientIp": "127.0.0.1",
+          "headers": {
+            "x-forwarded-for": [
+              {
+                "key": "X-Forwarded-For",
+                "value": "127.0.0.1"
+              }
+            ],
+            "user-agent": [
+              {
+                "key": "User-Agent",
+                "value": "Amazon CloudFront"
+              }
+            ],
+            "via": [
+              {
+                "key": "Via",
+                "value": "1.1 24327fc56f4433def8240583c3863fcc.cloudfront.net (CloudFront)"
+              }
+            ],
+            "sec-ch-ua": [
+              {
+                "key": "sec-ch-ua",
+                "value": "\".Not/A)Brand\";v=\"99\", \"Google Chrome\";v=\"103\", \"Chromium\";v=\"103\""
+              }
+            ],
+            "sec-ch-ua-mobile": [
+              {
+                "key": "sec-ch-ua-mobile",
+                "value": "?0"
+              }
+            ],
+            "sec-ch-ua-platform": [
+              {
+                "key": "sec-ch-ua-platform",
+                "value": "\"macOS\""
+              }
+            ],
+            "upgrade-insecure-requests": [
+              {
+                "key": "upgrade-insecure-requests",
+                "value": "1"
+              }
+            ],
+            "sec-fetch-site": [
+              {
+                "key": "sec-fetch-site",
+                "value": "same-origin"
+              }
+            ],
+            "sec-fetch-mode": [
+              {
+                "key": "sec-fetch-mode",
+                "value": "navigate"
+              }
+            ],
+            "sec-fetch-user": [
+              {
+                "key": "sec-fetch-user",
+                "value": "?1"
+              }
+            ],
+            "sec-fetch-dest": [
+              {
+                "key": "sec-fetch-dest",
+                "value": "document"
+              }
+            ],
+            "accept-encoding": [
+              {
+                "key": "Accept-Encoding",
+                "value": "gzip"
+              }
+            ],
+            "x-forwarded-host": [
+              {
+                "key": "X-Forwarded-Host",
+                "value": "example.com"
+              }
+            ],
+            "host": [
+              {
+                "key": "Host",
+                "value": "example.s3.amazonaws.com"
+              }
+            ]
+          },
+          "method": "GET",
+          "origin": {
+            "s3": {
+              "authMethod": "origin-access-identity",
+              "customHeaders": {
+                "x-env-name": [
+                  {
+                    "key": "x-env-name",
+                    "value": "example"
+                  }
+                ],
+                "x-env-namespace": [
+                  {
+                    "key": "x-env-namespace",
+                    "value": "example"
+                  }
+                ],
+                "x-env-stage": [
+                  {
+                    "key": "x-env-stage",
+                    "value": "example"
+                  }
+                ]
+              },
+              "domainName": "example.s3.amazonaws.com",
+              "path": "",
+              "region": "us-east-1"
+            }
+          },
+          "querystring": "",
+          "uri": "/"
+        }
+      }
+    }
+  ]
+}

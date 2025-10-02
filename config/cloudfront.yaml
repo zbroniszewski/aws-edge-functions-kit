@@ -1,0 +1,30 @@
+EDFDVBD6EXAMPLE:
+  - behavior: default
+    lambdaAssociations:
+      - functionName: example-test-origin-request
+        eventType: origin-request
+        includeBody: false
+        filePath: dist/lambda/origin-request/index.js
+      - functionName: example-test-origin-response
+        eventType: origin-response
+        includeBody: false
+        filePath: dist/lambda/origin-response/index.js
+    functionAssociations:
+      - functionName: example-test-viewer-request
+        eventType: viewer-request
+        filePath: dist/cloudfront/viewer-request/index.js
+EDFDVBD7EXAMPLE:
+  - behavior: default
+    lambdaAssociations:
+      - functionName: example-test-origin-request
+        eventType: origin-request
+        includeBody: false
+        filePath: dist/lambda/origin-request/index.js
+      - functionName: example-test-origin-response
+        eventType: origin-response
+        includeBody: false
+        filePath: dist/lambda/origin-response/index.js
+    functionAssociations:
+      - functionName: example-test-viewer-request
+        eventType: viewer-request
+        filePath: dist/cloudfront/viewer-request/index.js

@@ -1,0 +1,14 @@
+---
+
+services:
+  builder:
+    image: edge-functions-builder
+    container_name: edge-functions-builder
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules

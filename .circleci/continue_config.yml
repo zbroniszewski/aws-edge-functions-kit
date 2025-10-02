@@ -1,0 +1,94 @@
+---
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@3.1.3
+parameters:
+  deploy-functions:
+    type: boolean
+    default: false
+  manual-deploy-functions:
+    type: boolean
+    default: false
+executors:
+  node:
+    docker:
+      - image: cimg/node:16.17.1
+    resource_class: medium
+commands:
+  combine-package-lock-files:
+    description: 'Concatenate all top-level package-lock.json files into a single file. File is used as checksum source for part of caching key.'
+    parameters:
+      filename:
+        type: string
+    steps:
+      - run:
+          name: Combine package-lock.json files into a single file
+          command: find . -maxdepth 3 -type f -name "package-lock.json" -not -path "./node_modules/*" | xargs cat > << parameters.filename >>
+jobs:
+  test-functions:
+    executor: node
+    parameters:
+    steps:
+      - checkout
+      - combine-package-lock-files:
+          filename: package-lock.combined
+      - restore_cache:
+          keys:
+            - v1-aws-edge-functions-kit-{{ checksum "package-lock.combined" }}
+      - run:
+          name: Install dependencies if required
+          command: |
+            if [[ ! -d "./node_modules" ]]; then
+              npm ci
+            fi
+      - run:
+          name: Build functions
+          command: npm run build
+      - run:
+          name: Test functions
+          command: npm run test
+  deploy-functions:
+    executor: node
+    parameters:
+    steps:
+      - checkout
+      - combine-package-lock-files:
+          filename: package-lock.combined
+      - restore_cache:
+          keys:
+            - v1-aws-edge-functions-kit-{{ checksum "package-lock.combined" }}
+      - run:
+          name: Install dependencies if required
+          command: |
+            if [[ ! -d "./node_modules" ]]; then
+              npm ci
+            fi
+      - run:
+          name: Build functions
+          command: npm run build
+      - aws-cli/setup:
+          profile-name: aws-edge-functions-cicd-user
+          aws-region: AWS_REGION
+          aws-access-key-id: PROD_AWS_ACCESS_KEY_ID
+          aws-secret-access-key: PROD_AWS_SECRET_ACCESS_KEY
+          version: latest
+      - aws-cli/role-arn-setup:
+          profile-name: default
+          role-arn: $PROD_AWS_ROLE_ARN
+          source-profile: aws-edge-functions-cicd-user
+      - run:
+          name: Deploy functions
+          command: npm run deploy
+workflows:
+  test-and-deploy:
+    when: << pipeline.parameters.deploy-functions >>
+    jobs:
+      - test-functions
+      - hold:
+          type: approval
+          requires:
+            - test-functions
+      - deploy-functions:
+          requires:
+            - test-functions
+            - hold
