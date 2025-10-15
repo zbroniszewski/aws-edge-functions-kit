@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.183.0",
-    "@aws-sdk/client-lambda": "^3.183.0",
+    "@aws-sdk/client-lambda": "^3.910.0",
     "adm-zip": "^0.5.9",
     "bunyan": "^1.8.15",
     "js-yaml": "^4.1.0",
